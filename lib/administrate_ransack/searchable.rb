@@ -19,9 +19,20 @@ module AdministrateRansack
       params.permit(:search, :id, :page, :per_page, association_params, q: {})
     end
 
+    module InstanceMethods
+      def show_search_bar?
+        false
+      end
+
+      def apply_ransack_search?
+        true
+      end
+    end
+    
     class << self
       def prepended(base)
         base.helper_method :sanitized_order_params
+        base.include InstanceMethods
       end
     end
   end
