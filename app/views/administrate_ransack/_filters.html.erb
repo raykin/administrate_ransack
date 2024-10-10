@@ -1,6 +1,7 @@
 <%
   attribute_labels ||= {}
   attribute_types ||= @dashboard.attribute_types.select { |key, _value| @dashboard.collection_attributes.include?(key) }
+  attribute_types = attribute_types.select {|key, _value| (controller.resource_class.ransackable_attributes + controller.resource_class.ransackable_associations).include?(key.to_s) }
   options ||= {}
   form_options = { html: { 'data-administrate-ransack-filters': '1' } }
   namespace = local_assigns[:namespace] || :admin
